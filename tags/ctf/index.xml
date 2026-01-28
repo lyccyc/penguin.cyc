@@ -2,45 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CTF on Penguin&#39;s blog</title>
-    <link>http://localhost:1313/penguin.cyc/tags/ctf/</link>
+    <link>https://lyccyc.github.io/penguin.cyc/tags/ctf/</link>
     <description>Recent content in CTF on Penguin&#39;s blog</description>
     <generator>Hugo</generator>
     <language>zh-tw</language>
     <lastBuildDate>Sun, 26 Oct 2025 13:21:03 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/penguin.cyc/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://lyccyc.github.io/penguin.cyc/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CTF_WebForge</title>
-      <link>http://localhost:1313/penguin.cyc/post/sunshinectf-2025-webforge/</link>
+      <link>https://lyccyc.github.io/penguin.cyc/post/sunshinectf-2025-webforge/</link>
       <pubDate>Sun, 26 Oct 2025 13:21:03 +0800</pubDate>
-      <guid>http://localhost:1313/penguin.cyc/post/sunshinectf-2025-webforge/</guid>
+      <guid>https://lyccyc.github.io/penguin.cyc/post/sunshinectf-2025-webforge/</guid>
       <description>&lt;h1 id=&#34;webforge&#34;&gt;WebForge&lt;/h1&gt;&#xA;&lt;p&gt;這次解的題目是今年10月舉辦的 SunshineCTF 中的 WebForge&lt;/p&gt;</description>
     </item>
     <item>
       <title>2025_islabCTF_writeups</title>
-      <link>http://localhost:1313/penguin.cyc/post/2025_islabctf_writeups/</link>
+      <link>https://lyccyc.github.io/penguin.cyc/post/2025_islabctf_writeups/</link>
       <pubDate>Mon, 22 Sep 2025 19:17:07 +0800</pubDate>
-      <guid>http://localhost:1313/penguin.cyc/post/2025_islabctf_writeups/</guid>
+      <guid>https://lyccyc.github.io/penguin.cyc/post/2025_islabctf_writeups/</guid>
       <description>&lt;h1 id=&#34;2025_islabctf_writeups&#34;&gt;2025_islabCTF_writeups&lt;/h1&gt;&#xA;&lt;p&gt;身為北科 islab Web 狗的成員之一，這次比賽必須參加的吧&lt;/p&gt;&#xA;&lt;p&gt;但是沒人跟我說後面會有這麼多賽棍進來阿喂，好啦扣掉他們的話，這次應該是第四名(自我安慰&lt;/p&gt;&#xA;&lt;p&gt;這次共解了12題&lt;/p&gt;&#xA;&lt;p&gt;Misc 1 題，Forensics 1 題，OSINT 3 題，Crypto 1 題，Reverse 3 題，Web 3 題&lt;/p&gt;</description>
     </item>
     <item>
       <title>CTF_xxs-xss</title>
-      <link>http://localhost:1313/penguin.cyc/post/ctf_xxs-xss/</link>
+      <link>https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/</link>
       <pubDate>Mon, 08 Sep 2025 12:44:13 +0800</pubDate>
-      <guid>http://localhost:1313/penguin.cyc/post/ctf_xxs-xss/</guid>
+      <guid>https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/</guid>
       <description>&lt;h1 id=&#34;xxs-xss&#34;&gt;xxs-xss&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;人生第一題破解出來的 xss，祖墳冒煙啦&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;這是2025 No Hack No CTF 的 web 題目，拿來自己練習，花了一個多禮拜QQ&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Picoctf Web Medium 1</title>
+      <link>https://lyccyc.github.io/penguin.cyc/post/picoctf-web-medium-1/</link>
+      <pubDate>Mon, 21 Jul 2025 20:22:58 +0800</pubDate>
+      <guid>https://lyccyc.github.io/penguin.cyc/post/picoctf-web-medium-1/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>CTF_babyshell</title>
-      <link>http://localhost:1313/penguin.cyc/post/ctf_babyshell/</link>
+      <link>https://lyccyc.github.io/penguin.cyc/post/ctf_babyshell/</link>
       <pubDate>Sun, 29 Jun 2025 22:06:02 +0800</pubDate>
-      <guid>http://localhost:1313/penguin.cyc/post/ctf_babyshell/</guid>
+      <guid>https://lyccyc.github.io/penguin.cyc/post/ctf_babyshell/</guid>
       <description>&lt;h1 id=&#34;babyshell&#34;&gt;BabyShell&lt;/h1&gt;&#xA;&lt;p&gt;這次的題目是由&lt;a href=&#34;https://github.com/Chw41&#34;&gt;Chw41&lt;/a&gt;出題，&lt;a href=&#34;https://github.com/Chw41/Individual-CTF-Topic/tree/main/BabyShell&#34;&gt;題目來源&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;&#xA;&lt;p&gt;BabyShell is a Capture The Flag (CTF) challenge designed to test your skills in exploiting a simple web shell technique. The challenge involves leveraging the getTime() function to retrieve the current time, which is crucial for solving the puzzle.&lt;/p&gt;</description>
     </item>
     <item>
       <title>CTF_Trial-by-Fire</title>
-      <link>http://localhost:1313/penguin.cyc/post/trial_by_fire/</link>
+      <link>https://lyccyc.github.io/penguin.cyc/post/trial_by_fire/</link>
       <pubDate>Wed, 18 Jun 2025 16:50:58 +0800</pubDate>
-      <guid>http://localhost:1313/penguin.cyc/post/trial_by_fire/</guid>
+      <guid>https://lyccyc.github.io/penguin.cyc/post/trial_by_fire/</guid>
       <description>&lt;h1 id=&#34;trial_by_fire&#34;&gt;Trial_by_Fire&lt;/h1&gt;&#xA;&lt;p&gt;這次打的題目是 2025 HTB 上的&lt;/p&gt;</description>
     </item>
   </channel>
