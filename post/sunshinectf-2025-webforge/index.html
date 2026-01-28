@@ -12,7 +12,7 @@
     <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/syntax.css' />
     <title>CTF_WebForge - Penguin&#39;s blog</title>
     
-    <link rel="icon" type="image/x-icon" href='../../images/favicon.ico'>
+    <link rel="icon" type="image/x-icon" href='/images/favicon.ico'>
     
     <meta name="theme-color" content="#1e2327">
 
@@ -138,7 +138,7 @@
               <div class="d-none d-md-block">
                 <a class="avatar mr-2 flex-shrink-0" href="https://lyccyc.github.io/penguin.cyc/">
                   <img class=" avatar-user"
-                    src="../../images/penguin.png"
+                    src="/images/penguin.png"
                     width="32" height="32"></a>
               </div>
               <div class="d-flex flex-column">
@@ -192,7 +192,7 @@
                   <div class="file-actions flex-order-2 pt-0">
                     
                     
-                    <a class="muted-link mr-3" href="../../tags/ctf">
+                    <a class="muted-link mr-3" href="/tags/ctf">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
@@ -201,7 +201,7 @@
                       CTF
                     </a>
                     
-                    <a class="muted-link mr-3" href="../../tags/website">
+                    <a class="muted-link mr-3" href="/tags/website">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
@@ -210,7 +210,7 @@
                       website
                     </a>
                     
-                    <a class="muted-link mr-3" href="../../tags/docker">
+                    <a class="muted-link mr-3" href="/tags/docker">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
@@ -230,16 +230,16 @@
 <p>這次解的題目是今年10月舉辦的 SunshineCTF 中的 WebForge</p>
 <h2 id="description">Description</h2>
 <p>連線後打開網頁如圖</p>
-<p><img src="../../images/Sunshine2025-1.png" alt="image">
-<img src="../../images/Sunshine2025-2.png" alt="image"></p>
+<p><img src="/images/Sunshine2025-1.png" alt="image">
+<img src="/images/Sunshine2025-2.png" alt="image"></p>
 <p>中間的 <code>LAUNCH SSRF TOOL</code> 是可以按的，會跳轉到 <code>/fetch</code> 頁面
 但是會顯示 403 Forbidden</p>
-<p><img src="../../images/Sunshine2025-3.png" alt="image"></p>
+<p><img src="/images/Sunshine2025-3.png" alt="image"></p>
 <p>打開 source code 中有提到的 <code>/robots.txt</code> 頁面</p>
-<p><img src="../../images/Sunshine2025-4.png" alt="image"></p>
+<p><img src="/images/Sunshine2025-4.png" alt="image"></p>
 <p>顯示 <code>/fetch</code> 和 <code>/admin</code> 需要特定的 auth header 才可以訪問</p>
 <p>再去看 <code>/admin</code> 頁面</p>
-<p><img src="../../images/Sunshine2025-5.png" alt="image"></p>
+<p><img src="/images/Sunshine2025-5.png" alt="image"></p>
 <p>感覺是需要從 <code>/fetch</code> 進去後透過訪問 <code>/admin</code> 頁面做 SSRF，但也不太確定</p>
 <h2 id="solution">Solution</h2>
 <p>有點沒想法，google 搜尋找到了 <a href="https://github.com/devanshbatham/headerpwn/">headerpwn</a> 這個工具</p>

